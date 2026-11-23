@@ -136,8 +136,17 @@ class Assets implements ConsoleClass
     final context = openfl.Lib.current.stage.context3D;
     final astcPath:String = Path.withExtension(path, "astc");
 
-    if (context != null && context.isASTCSupported() && openfl.utils.Assets.exists(astcPath, AssetType.BINARY))
+    if (openfl.utils.Assets.exists(astcPath, AssetType.BINARY))
     {
+      // This build targets two ASTC-capable devices. If an ASTC companion exists,
+      // never silently decode the PNG instead: fail visibly if the GPU path is unavailable.
+      if (context == null || !context.isASTCSupported())
+      {
+        final unsupported = new Promise<openfl.display.BitmapData>();
+        unsupported.error('ASTC is required for "$path", but the current WebGL context does not expose ASTC support.');
+        return unsupported.future;
+      }
+
       // Reuse an already-created hardware-only texture when possible.
       if (useCache && cache.enabled && cache.hasBitmapData(path))
       {
@@ -149,20 +158,6 @@ class Assets implements ConsoleClass
       }
 
       final promise = new Promise<openfl.display.BitmapData>();
-      var fallbackStarted:Bool = false;
-
-      function fallbackToPng(error:Dynamic):Void
-      {
-        if (fallbackStarted) return;
-        fallbackStarted = true;
-
-        trace('[ASTC] Could not load compressed image "$path"; falling back to PNG. $error');
-
-        openfl.utils.Assets.loadBitmapData(path, useCache)
-          .onComplete(function(bitmapData) promise.complete(bitmapData))
-          .onError(function(fallbackError) promise.error(fallbackError))
-          .onProgress(function(progress, total) promise.progress(progress, total));
-      }
 
       openfl.utils.Assets.loadBytes(astcPath)
         .onComplete(function(bytes)
@@ -186,10 +181,10 @@ class Assets implements ConsoleClass
           }
           catch (error:Dynamic)
           {
-            fallbackToPng(error);
+            promise.error('ASTC texture creation failed for "$path": $error');
           }
         })
-        .onError(fallbackToPng)
+        .onError(function(error) promise.error('ASTC data loading failed for "$path": $error'))
         .onProgress(function(progress, total) promise.progress(progress, total));
 
       return promise.future;
