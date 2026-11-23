@@ -51,25 +51,38 @@ class ASTCWebGLMacro
               {
                 return switch (expression.expr)
                 {
-                  case EFor(iterator, body) if (iterator.name == "id"):
-                    final skipPngPreload:Expr = macro
+                  case EFor(iterator, body):
+                    final isAssetIdLoop:Bool = switch (iterator.expr)
                     {
-                      if (funkin.util.ASTCRuntime.shouldSkipPngPreload(id, this))
+                      case EIn({expr: EConst(CIdent("id"))}, _): true;
+                      default: false;
+                    };
+
+                    if (!isAssetIdLoop)
+                    {
+                      expression;
+                    }
+                    else
+                    {
+                      final skipPngPreload:Expr = macro
                       {
-                        continue;
-                      }
-                    };
+                        if (funkin.util.ASTCRuntime.shouldSkipPngPreload(id, this))
+                        {
+                          continue;
+                        }
+                      };
 
-                    final patchedBody:Expr = switch (body.expr)
-                    {
-                      case EBlock(expressions):
-                        expressions.unshift(skipPngPreload);
-                        body;
-                      default:
-                        {expr: EBlock([skipPngPreload, body]), pos: body.pos};
-                    };
+                      final patchedBody:Expr = switch (body.expr)
+                      {
+                        case EBlock(expressions):
+                          expressions.unshift(skipPngPreload);
+                          body;
+                        default:
+                          {expr: EBlock([skipPngPreload, body]), pos: body.pos};
+                      };
 
-                    {expr: EFor(iterator, patchedBody), pos: expression.pos};
+                      {expr: EFor(iterator, patchedBody), pos: expression.pos};
+                    }
 
                   default:
                     expression;
