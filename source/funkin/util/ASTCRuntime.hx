@@ -75,4 +75,3 @@ class ASTCRuntime
     return skippedPngPreloadCount;
   }
 }
-}
