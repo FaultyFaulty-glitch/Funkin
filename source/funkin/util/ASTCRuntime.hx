@@ -42,9 +42,9 @@ class ASTCRuntime
 
     try
     {
-      final context = openfl.Lib.current.stage.context3D;
-      if (context == null || !context.isASTCSupported()) return false;
-
+      // The HTML5 build is intentionally ASTC-only for the two target devices.
+      // Do not depend on Context3D being initialised yet: Lime calls this during
+      // its asset preload phase, before the game has finished creating the renderer.
       final astcPath:String = haxe.io.Path.withExtension(assetId, "astc");
       if (!library.exists(astcPath, "BINARY")) return false;
 
