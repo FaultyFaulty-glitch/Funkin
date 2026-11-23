@@ -8,10 +8,10 @@ import haxe.macro.ExprTools;
 /**
  * Patches OpenFL's ASTC extension-name lookups for HTML5 builds.
  *
- * OpenFL uses the native GL_KHR_texture_compression_astc_ldr name.
- * WebGL exposes the same ASTC formats through WEBGL_compressed_texture_astc.
- * The extension's format constants retain their KHR names, so only the
- * extension string itself needs to change.
+ * OpenFL uses the native KHR extension name. WebGL exposes the ASTC formats
+ * through WEBGL_compressed_texture_astc, while retaining the KHR format constants.
+ * The ASTC texture constructor is also instrumented so the browser console can
+ * confirm that compressed GPU textures were actually created.
  */
 class ASTCWebGLMacro
 {
@@ -21,12 +21,15 @@ class ASTCWebGLMacro
 
     if (Context.defined("js") && Context.defined("html5"))
     {
+      final localClass = Context.getLocalClass();
+      final instrumentASTCTexture:Bool = localClass != null && localClass.get().name == "ASTCTexture";
+
       for (field in fields)
       {
         switch (field.kind)
         {
           case FFun(method) if (method.expr != null):
-            method.expr = ExprTools.map(method.expr, function(expression:Expr):Expr
+            final patchedExpr:Expr = ExprTools.map(method.expr, function(expression:Expr):Expr
             {
               return switch (expression.expr)
               {
@@ -36,6 +39,25 @@ class ASTCWebGLMacro
                   expression;
               };
             });
+
+            if (instrumentASTCTexture && field.name == "new")
+            {
+              // Append after the constructor's existing statements so super(context)
+              // remains the first constructor operation.
+              switch (patchedExpr.expr)
+              {
+                case EBlock(expressions):
+                  expressions.push(macro funkin.util.ASTCRuntime.recordUpload());
+                  method.expr = {expr: EBlock(expressions), pos: patchedExpr.pos};
+                default:
+                  method.expr = patchedExpr;
+              }
+            }
+            else
+            {
+              method.expr = patchedExpr;
+            }
+
           default:
         }
       }

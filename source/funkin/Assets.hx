@@ -1,6 +1,9 @@
 package funkin;
 
 import openfl.utils.Future;
+import lime.app.Promise;
+import haxe.io.Path;
+import openfl.utils.AssetType;
 import funkin.util.macro.ConsoleMacro;
 
 /**
@@ -125,9 +128,76 @@ class Assets implements ConsoleClass
    * @param path The asset path to load from
    * @return The future which promises to return the loaded Bitmap image
    */
-  public static function loadBitmapData(path:String):Future<openfl.display.BitmapData>
+  public static function loadBitmapData(path:String, useCache:Bool = true):Future<openfl.display.BitmapData>
   {
-    return openfl.utils.Assets.loadBitmapData(path);
+    #if html5
+    // OpenFL's built-in asynchronous image loader currently bypasses its ASTC path.
+    // Load the ASTC companion as binary data and upload it directly when WebGL supports ASTC.
+    final context = openfl.Lib.current.stage.context3D;
+    final astcPath:String = Path.withExtension(path, "astc");
+
+    if (context != null && context.isASTCSupported() && openfl.utils.Assets.exists(astcPath, AssetType.BINARY))
+    {
+      // Reuse an already-created hardware-only texture when possible.
+      if (useCache && cache.enabled && cache.hasBitmapData(path))
+      {
+        final cachedBitmap = cache.getBitmapData(path);
+        if (cachedBitmap != null && !cachedBitmap.readable)
+        {
+          return Future.withValue(cachedBitmap);
+        }
+      }
+
+      final promise = new Promise<openfl.display.BitmapData>();
+      var fallbackStarted:Bool = false;
+
+      function fallbackToPng(error:Dynamic):Void
+      {
+        if (fallbackStarted) return;
+        fallbackStarted = true;
+
+        trace('[ASTC] Could not load compressed image "$path"; falling back to PNG. $error');
+
+        openfl.utils.Assets.loadBitmapData(path, useCache)
+          .onComplete(function(bitmapData) promise.complete(bitmapData))
+          .onError(function(fallbackError) promise.error(fallbackError))
+          .onProgress(function(progress, total) promise.progress(progress, total));
+      }
+
+      openfl.utils.Assets.loadBytes(astcPath)
+        .onComplete(function(bytes)
+        {
+          try
+          {
+            final texture = context.createASTCTexture(bytes);
+            final bitmapData = openfl.display.BitmapData.fromTexture(texture, false);
+
+            if (bitmapData == null)
+            {
+              throw 'OpenFL could not wrap the ASTC texture for "$path".';
+            }
+
+            if (useCache && cache.enabled)
+            {
+              cache.setBitmapData(path, bitmapData);
+            }
+
+            promise.complete(bitmapData);
+          }
+          catch (error:Dynamic)
+          {
+            fallbackToPng(error);
+          }
+        })
+        .onError(fallbackToPng)
+        .onProgress(function(progress, total) promise.progress(progress, total));
+
+      return promise.future;
+    }
+    #end
+
+    // Unsupported browsers and native builds retain OpenFL's normal PNG/native loading path.
+    return openfl.utils.Assets.loadBitmapData(path, useCache);
   }
 
   /**

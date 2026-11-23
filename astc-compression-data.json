@@ -148,13 +148,352 @@
     {
       "asset": "assets/week7/images/erect/sniper/spritemap1.png",
       "blocksize": "6x6"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/albumRoll/expansion1-text.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/albumRoll/expansion1.png",
+      "blocksize": "8x8"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/albumRoll/expansion2-text.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/albumRoll/expansion2.png",
+      "blocksize": "8x8"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/albumRoll/freeplayAlbum/spritemap1.png",
+      "blocksize": "8x8"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/albumRoll/spaghetti-text.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/albumRoll/spaghetti.png",
+      "blocksize": "8x8"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/albumRoll/volume1-text.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/albumRoll/volume1.png",
+      "blocksize": "8x8"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/albumRoll/volume2-text.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/albumRoll/volume2.png",
+      "blocksize": "8x8"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/albumRoll/volume3-text.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/albumRoll/volume3.png",
+      "blocksize": "8x8"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/albumRoll/volume4-text.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/albumRoll/volume4.png",
+      "blocksize": "8x8"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/backing-text-yeah/spritemap1.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/backingCards/newCharacter/darkback.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/backingCards/newCharacter/multiplyBar.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/backingCards/newCharacter/orange gradient.png",
+      "blocksize": "6x6"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/backingCards/newCharacter/red gradient.png",
+      "blocksize": "6x6"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/backingCards/newCharacter/red.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/backingCards/newCharacter/yellow bg piece.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/backingCards/pico/blueBar.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/backingCards/pico/glow.png",
+      "blocksize": "6x6"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/backingCards/pico/lowerLoop.png",
+      "blocksize": "6x6"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/backingCards/pico/middleLoop.png",
+      "blocksize": "6x6"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/backingCards/pico/pico-confirm/spritemap1.png",
+      "blocksize": "6x6"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/backingCards/pico/topLoop.png",
+      "blocksize": "6x6"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/beatdark.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/beatglow.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/cardGlow.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/clearBox.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/confirmGlow.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/confirmGlow2.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/dotPulse.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/favHeart.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/freeplay-boyfriend/spritemap1.png",
+      "blocksize": "6x6"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/freeplay-pico/spritemap1.png",
+      "blocksize": "6x6"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/freeplayBGweek1-bf.png",
+      "blocksize": "8x8"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/freeplayBGweek1-pico.png",
+      "blocksize": "8x8"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/freeplayCapsule/bignumbers.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/freeplayCapsule/bpmtext.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/freeplayCapsule/capsule/freeplayCapsule.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/freeplayCapsule/capsule/freeplayCapsule_pico.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/freeplayCapsule/difficultytext.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/freeplayCapsule/new.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/freeplayCapsule/smallnumbers.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/freeplayFlame.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/freeplaySelector.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/freeplaySelector/freeplaySelector.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/freeplaySelector/freeplaySelector_pico.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/freeplayStars/spritemap1.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/freeplayeasy.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/freeplayerect.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/freeplayhard.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/freeplaynightmare.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/freeplaynormal.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/glowingText.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/highscore.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/icons/bfpixel.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/icons/dadpixel.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/icons/darnellpixel.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/icons/gfpixel.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/icons/mompixel.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/icons/monsterpixel.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/icons/parents-christmaspixel.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/icons/picopixel.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/icons/senpaipixel.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/icons/spiritpixel.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/icons/spookypixel.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/icons/sserafim-kazuhapixel.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/icons/tankmanpixel.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/instBox/instBox.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/letterStuff.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/miniArrow.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/pinkBack.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/rankVignette.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/rankbadges.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/ref.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/seperator.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/sortedLetters/spritemap1.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/sparkle.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/sparks.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/sparksadd.png",
+      "blocksize": "4x4"
+    },
+    {
+      "asset": "assets/preload/images/freeplay/transitionGradient.png",
+      "blocksize": "4x4"
     }
   ],
   "excludes": [
     "assets/fonts/vcr-bmp.png",
     "assets/preload/images/cursor/",
     "assets/preload/images/fonts/",
-    "assets/preload/images/freeplay/",
     "assets/preload/images/icons/",
     "assets/preload/images/soundtray/",
     "assets/preload/images/stageBuild/",

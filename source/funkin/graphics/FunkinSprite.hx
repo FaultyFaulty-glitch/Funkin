@@ -14,6 +14,7 @@ import flixel.graphics.frames.FlxFrame;
 import flixel.FlxCamera;
 import flixel.system.FlxAssets.FlxGraphicAsset;
 import funkin.FunkinMemory;
+import funkin.Assets;
 import animate.internal.SymbolItem;
 import animate.internal.elements.Element;
 import animate.internal.elements.AtlasInstance;
@@ -263,7 +264,7 @@ class FunkinSprite extends FlxAnimate
 
     trace('[ASYNC] Start loading image (${key})');
     graphic.persist = true;
-    openfl.Assets.loadBitmapData(key)
+    Assets.loadBitmapData(key)
       .onComplete(function(bitmapData:openfl.display.BitmapData)
       {
         trace('[ASYNC] Finished loading image');
