@@ -35,7 +35,7 @@ class ASTCRuntime
    * Determines whether Lime should skip eagerly loading a PNG whose ASTC
    * companion can be used by the current HTML5 rendering context.
    */
-  public static function shouldSkipPngPreload(assetId:String, library:lime.utils.AssetLibrary):Bool
+  public static function shouldSkipPngPreload(assetId:String, library:Dynamic):Bool
   {
     #if (js && html5)
     if (assetId == null || !StringTools.endsWith(assetId, ".png")) return false;
