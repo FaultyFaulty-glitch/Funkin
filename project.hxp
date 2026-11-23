@@ -1889,7 +1889,7 @@ class Project extends HXProject
     // Register the ASTC companion under the original asset ID with an .astc extension.
     if (compressedPath != null && compressedRename != null)
     {
-      var compressedAsset = new Asset(compressedPath, compressedRename, null, embed, true);
+      var compressedAsset = new Asset(compressedPath, compressedRename, AssetType.BINARY, embed, true);
       @:nullSafety(Off)
       {
         compressedAsset.library = library ?? "default";
