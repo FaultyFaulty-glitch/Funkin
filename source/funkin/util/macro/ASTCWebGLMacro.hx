@@ -54,7 +54,7 @@ class ASTCWebGLMacro
                   case EFor(iterator, body):
                     final isAssetIdLoop:Bool = switch (iterator.expr)
                     {
-                      case EIn({expr: EConst(CIdent("id"))}, _): true;
+                      case EBinop(OpIn, {expr: EConst(CIdent("id"))}, _): true;
                       default: false;
                     };
 
