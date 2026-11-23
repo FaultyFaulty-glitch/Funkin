@@ -1126,6 +1126,7 @@ class Project extends HXProject
     // OpenFL uses the native KHR extension name; WebGL exposes the same ASTC formats via its WEBGL extension.
     addHaxeMacro("addMetadata('@:build(funkin.util.macro.ASTCWebGLMacro.patch())', 'openfl.display3D.Context3D')");
     addHaxeMacro("addMetadata('@:build(funkin.util.macro.ASTCWebGLMacro.patch())', 'openfl.display3D.textures.ASTCTexture')");
+    addHaxeMacro("addMetadata('@:build(funkin.util.macro.ASTCWebGLMacro.patch())', 'lime.utils.AssetLibrary')");
   }
 
   function configureOutputDir()
