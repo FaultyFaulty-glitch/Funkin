@@ -1126,7 +1126,6 @@ class Project extends HXProject
     // OpenFL uses the native KHR extension name; WebGL exposes the same ASTC formats via its WEBGL extension.
     addHaxeMacro("addMetadata('@:build(funkin.util.macro.ASTCWebGLMacro.patch())', 'openfl.display3D.Context3D')");
     addHaxeMacro("addMetadata('@:build(funkin.util.macro.ASTCWebGLMacro.patch())', 'openfl.display3D.textures.ASTCTexture')");
-    addHaxeMacro("addMetadata('@:build(funkin.util.macro.ASTCWebGLMacro.patch())', 'lime.utils.AssetLibrary')");
   }
 
   function configureOutputDir()
@@ -1848,8 +1847,9 @@ class Project extends HXProject
    */
   public function addAsset(path:String, ?rename:String, ?library:String, embed:Bool = false, ?padName:String):Void
   {
-    // Keep the original PNG in HTML5 builds so browsers without ASTC support can fall back safely.
-    // Native mobile builds retain the existing ASTC-only packaging behavior.
+    // On HTML5, ASTC-backed PNGs are deliberately omitted from the asset library.
+    // Their .astc companions are registered as BINARY assets and are the only
+    // texture source at runtime. PNGs without an ASTC companion remain unchanged.
     var compressedPath:Null<String> = null;
     var compressedRename:Null<String> = null;
 
@@ -1872,19 +1872,22 @@ class Project extends HXProject
       }
     }
 
-    // The regular image is registered first as the runtime fallback.
-    var asset = new Asset(path, rename, null, embed, true);
-    @:nullSafety(Off)
+    // Keep the original asset only when no HTML5 ASTC companion replaces it.
+    if (compressedPath == null)
     {
-      asset.library = library ?? "default";
-    }
+      var asset = new Asset(path, rename, null, embed, true);
+      @:nullSafety(Off)
+      {
+        asset.library = library ?? "default";
+      }
 
-    if (padName != null && isBundle())
-    {
-      asset.deliveryPackName = padName;
-    }
+      if (padName != null && isBundle())
+      {
+        asset.deliveryPackName = padName;
+      }
 
-    this.assets.push(asset);
+      this.assets.push(asset);
+    }
 
     // Register the ASTC companion under the original asset ID with an .astc extension.
     if (compressedPath != null && compressedRename != null)
