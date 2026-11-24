@@ -120,6 +120,40 @@ class Assets implements ConsoleClass
    */
   public static function getBitmapData(path:String, useCache:Bool = true):openfl.display.BitmapData
   {
+    #if html5
+    // ASTC-backed images are stored only as .astc BINARY assets in HTML5 builds.
+    // Handle synchronous callers too, so no code path silently requests the removed PNG.
+    final astcPath:String = Path.withExtension(path, "astc");
+    if (openfl.utils.Assets.exists(astcPath, AssetType.BINARY))
+    {
+      final context = openfl.Lib.current.stage.context3D;
+      if (context == null || !context.isASTCSupported())
+      {
+        throw 'ASTC is required for "$path", but the current WebGL context does not expose ASTC support.';
+      }
+
+      if (useCache && cache.enabled && cache.hasBitmapData(path))
+      {
+        final cachedBitmap = cache.getBitmapData(path);
+        if (cachedBitmap != null) return cachedBitmap;
+      }
+
+      final texture = context.createASTCTexture(openfl.utils.Assets.getBytes(astcPath));
+      final bitmapData = openfl.display.BitmapData.fromTexture(texture, false);
+      if (bitmapData == null)
+      {
+        throw 'OpenFL could not wrap the ASTC texture for "$path".';
+      }
+
+      if (useCache && cache.enabled)
+      {
+        cache.setBitmapData(path, bitmapData);
+      }
+
+      return bitmapData;
+    }
+    #end
+
     return openfl.utils.Assets.getBitmapData(path, useCache);
   }
 
