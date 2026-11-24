@@ -44,50 +44,51 @@ class ASTCWebGLMacro
 
             if (patchAssetLibrary && field.name == "load")
             {
-              // The default Lime asset-library loader eagerly decodes every preloaded
-              // PNG, even when an ASTC companion is available. Skip only those PNGs
-              // when this browser's actual rendering context supports ASTC.
+              // Lime's AssetLibrary.load() has one preload iteration over its asset IDs.
+              // Inject directly into that loop rather than relying on the iterator's
+              // exact macro-AST representation, which can differ across Haxe versions.
               patchedExpr = ExprTools.map(patchedExpr, function(expression:Expr):Expr
               {
                 return switch (expression.expr)
                 {
                   case EFor(iterator, body):
-                    final isAssetIdLoop:Bool = switch (iterator.expr)
+                    final skipPngPreload:Expr = macro
                     {
-                      case EBinop(OpIn, {expr: EConst(CIdent("id"))}, _): true;
-                      default: false;
+                      if (funkin.util.ASTCRuntime.shouldSkipPngPreload(id, this))
+                      {
+                        continue;
+                      }
                     };
 
-                    if (!isAssetIdLoop)
+                    final patchedBody:Expr = switch (body.expr)
                     {
-                      expression;
-                    }
-                    else
-                    {
-                      final skipPngPreload:Expr = macro
-                      {
-                        if (funkin.util.ASTCRuntime.shouldSkipPngPreload(id, this))
-                        {
-                          continue;
-                        }
-                      };
+                      case EBlock(expressions):
+                        expressions.unshift(skipPngPreload);
+                        body;
+                      default:
+                        {expr: EBlock([skipPngPreload, body]), pos: body.pos};
+                    };
 
-                      final patchedBody:Expr = switch (body.expr)
-                      {
-                        case EBlock(expressions):
-                          expressions.unshift(skipPngPreload);
-                          body;
-                        default:
-                          {expr: EBlock([skipPngPreload, body]), pos: body.pos};
-                      };
-
-                      {expr: EFor(iterator, patchedBody), pos: expression.pos};
-                    }
+                    {expr: EFor(iterator, patchedBody), pos: expression.pos};
 
                   default:
                     expression;
                 };
               });
+
+              // Runtime marker proving this exact Lime method was patched and called.
+              patchedExpr = switch (patchedExpr.expr)
+              {
+                case EBlock(expressions):
+                  expressions.unshift(macro trace('[ASTC] Lime AssetLibrary.load preload hook active.'));
+                  patchedExpr;
+                default:
+                  macro
+                  {
+                    trace('[ASTC] Lime AssetLibrary.load preload hook active.');
+                    $patchedExpr;
+                  };
+              };
             }
 
             if (instrumentASTCTexture && field.name == "new")
